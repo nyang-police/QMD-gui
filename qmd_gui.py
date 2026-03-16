@@ -921,10 +921,19 @@ class CollectionPanel(QWidget):
 
     def _embed(self):
         force = self.force_embed_check.isChecked()
-        self._set_busy(True, "Starting embedding...")
 
         self.progress_bar.setRange(0, 100)
         self.progress_bar.setValue(0)
+        self.progress_bar.setVisible(True)
+        self.progress_label.setVisible(True)
+        self.progress_label.setText("Starting embedding...")
+
+        self.add_btn.setEnabled(False)
+        self.remove_btn.setEnabled(False)
+        self.rename_btn.setEnabled(False)
+        self.update_btn.setEnabled(False)
+        self.embed_btn.setEnabled(False)
+        self.refresh_btn.setEnabled(False)
 
         self._embed_worker = EmbedWorker(force=force)
         self._embed_worker.progress.connect(self._on_embed_progress)
