@@ -48,7 +48,7 @@ uv add PySide6 markdown requests
 Calls `qmd` via subprocess. No server required.
 
 ```bash
-python qmd_gui.py
+uv run qmd_gui.py
 ```
 
 ### MCP HTTP Mode
