@@ -6,7 +6,6 @@ QMD is an on-device search engine that indexes your markdown documents locally a
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![Qt](https://img.shields.io/badge/GUI-PySide6-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## Features
 
@@ -131,6 +130,6 @@ Edit `style.qss` to change the UI theme. The default uses the Catppuccin Mocha c
 |Text|`#cdd6f4`|
 |Accent (Blue)|`#89b4fa`|
 
-## License
+## Notes
 
-MIT
+This application has only been tested on macOS. It may work on Windows and Linux but is not guaranteed.
