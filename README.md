@@ -30,7 +30,7 @@ QMD is an on-device search engine that indexes your markdown documents locally a
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/qmd-gui.git
+git clone https://github.com/nyang-police/QMD-gui.git
 cd qmd-gui
 pip install PySide6 markdown requests
 ```
