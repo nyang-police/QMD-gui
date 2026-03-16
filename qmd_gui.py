@@ -732,7 +732,9 @@ class CollectionPanel(QWidget):
         # ── Progress ──
         self.progress_bar = QProgressBar()
         self.progress_bar.setVisible(False)
-        self.progress_bar.setRange(0, 0)
+        self.progress_bar.setRange(0, 100)
+        self.progress_bar.setValue(0)
+        self.progress_bar.setFormat("%p%")
         layout.addWidget(self.progress_bar)
 
         self.progress_label = QLabel("")
@@ -826,6 +828,10 @@ class CollectionPanel(QWidget):
         self.embed_btn.setEnabled(not busy)
         self.refresh_btn.setEnabled(not busy)
 
+        if busy:
+            # 기본은 indeterminate, embed에서는 별도로 range 설정
+            self.progress_bar.setRange(0, 0)
+
     def _on_worker_finished(self, message: str):
         self._set_busy(False)
         self.refresh_collections()
@@ -901,12 +907,53 @@ class CollectionPanel(QWidget):
 
     def _embed(self):
         force = self.force_embed_check.isChecked()
-        label = "Force re-embedding" if force else "Generating embeddings"
-        self._run_worker(
-            self.backend.embed,
-            force,
-            busy_message=f"{label}... (this may take a while)",
-        )
+        self._set_busy(True, "Starting embedding...")
+
+        self.progress_bar.setRange(0, 100)
+        self.progress_bar.setValue(0)
+
+        self._embed_worker = EmbedWorker(force=force)
+        self._embed_worker.progress.connect(self._on_embed_progress)
+        self._embed_worker.log.connect(self._on_embed_log)
+        self._embed_worker.finished.connect(self._on_embed_finished)
+        self._embed_worker.error.connect(self._on_embed_error)
+        self._embed_worker.start()
+
+    def _on_embed_progress(self, pct: int):
+        self.progress_bar.setValue(pct)
+        self.progress_label.setText(f"Embedding... {pct}%")
+
+    def _on_embed_log(self, line: str):
+        # 로그를 detail_view에 추가
+        current = self.detail_view.toPlainText()
+        if current:
+            self.detail_view.setPlainText(current + "\n" + line)
+        else:
+            self.detail_view.setPlainText(line)
+        # 자동 스크롤
+        scrollbar = self.detail_view.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
+
+    def _on_embed_finished(self, msg: str):
+        self._set_busy(False)
+        self.progress_bar.setValue(100)
+        self.progress_label.setText(msg)
+        self.refresh_collections()
+        self.collections_changed.emit()
+        # 3초 후 프로그레스 숨기기
+        QTimer.singleShot(3000, self._hide_progress)
+
+    def _on_embed_error(self, msg: str):
+        self._set_busy(False)
+        self.progress_bar.setValue(0)
+        QMessageBox.warning(self, "Embedding Error", msg)
+        self._hide_progress()
+
+    def _hide_progress(self):
+        self.progress_bar.setVisible(False)
+        self.progress_bar.setValue(0)
+        self.progress_label.setVisible(False)
+        self.progress_label.setText("")
 
 
 # ──────────────────────────────────────────────
@@ -1228,6 +1275,73 @@ class AsyncWorker(QThread):
         try:
             result = self.func(*self.args)
             self.finished.emit(result)
+        except Exception as e:
+            self.error.emit(str(e))
+
+
+# ──────────────────────────────────────────────
+#  Embed Worker (for running qmd embed with progress parsing)
+# ──────────────────────────────────────────────
+
+
+class EmbedWorker(QThread):
+    """Worker that runs embed_runner.py and reads JSON progress lines."""
+
+    progress = Signal(int)
+    detail = Signal(str)
+    log = Signal(str)
+    finished = Signal(str)
+    error = Signal(str)
+
+    def __init__(self, force: bool = False):
+        super().__init__()
+        self.force = force
+
+    def run(self):
+        try:
+            # embed_runner.py 경로 (qmd_gui.py와 같은 디렉토리)
+            runner_path = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), "embed_runner.py"
+            )
+
+            cmd = [sys.executable, runner_path]
+            if self.force:
+                cmd.append("--force")
+
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+            for line in process.stdout:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    msg = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+
+                msg_type = msg.get("type", "")
+                if msg_type == "progress":
+                    self.progress.emit(msg["pct"])
+                    if msg.get("detail"):
+                        self.detail.emit(msg["detail"])
+                elif msg_type == "log":
+                    self.log.emit(msg["text"])
+                elif msg_type == "done":
+                    if msg["exit_code"] != 0:
+                        self.error.emit(
+                            f"qmd embed exited with code {msg['exit_code']}"
+                        )
+                        return
+
+            process.wait()
+            self.progress.emit(100)
+            self.finished.emit("Embedding complete!")
+
         except Exception as e:
             self.error.emit(str(e))
 
