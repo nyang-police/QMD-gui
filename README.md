@@ -126,4 +126,4 @@ Edit `style.qss` to change the UI theme. The default uses the Catppuccin Mocha c
 
 ## Notes
 
-This application has only been tested on macOS. It may work on Windows and Linux but is not guaranteed.
+This application has only been tested on macOS with Python 3.13. It may work on Windows and Linux with other python versions but is not guaranteed.
