@@ -1,0 +1,39 @@
+QMainWindow { background: #1e1e2e; color: #cdd6f4; }
+QGroupBox { color: #cdd6f4; border: 1px solid #45475a; border-radius: 0px;
+             margin-top: 8px; padding-top: 14px; }
+QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 4px; }
+QLineEdit { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
+             border-radius: 4px; padding: 6px; }
+QComboBox { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
+             border-radius: 4px; padding: 4px; }
+QComboBox QAbstractItemView { background: #313244; color: #cdd6f4; }
+QSpinBox { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
+            border-radius: 4px; padding: 4px; }
+QPushButton { background: #89b4fa; color: #1e1e2e; border: none;
+               border-radius: 4px; padding: 6px 16px; font-weight: bold; }
+QPushButton:hover { background: #74c7ec; }
+QPushButton:disabled { background: #585b70; color: #6c7086; }
+QListWidget { background: #181825; color: #cdd6f4; border: 1px solid #45475a;
+               border-radius: 0px; }
+QListWidget::item:selected { background: #45475a; }
+QTextEdit { background: #181825; color: #cdd6f4; border: 1px solid #45475a;
+             border-radius: 0px; }
+QTabWidget::pane { border: 1px solid #45475a; background: #181825; border-radius: 0px; }
+QTabBar::tab { background: #313244; color: #cdd6f4; padding: 6px 16px; }
+QTabBar::tab:selected { background: #45475a; }
+QLabel { color: #cdd6f4; }
+QStatusBar { color: #a6adc8; background: #181825; }
+QSplitter::handle { background: #45475a; }
+QSplitter::handle:horizontal { width: 1px; }
+QSplitter::handle:vertical { height: 1px; }
+QProgressBar { background: #313244; border: 1px solid #45475a; border-radius: 4px;
+                text-align: center; color: #cdd6f4; }
+QProgressBar::chunk { background: #89b4fa; border-radius: 3px; }
+QCheckBox { color: #cdd6f4; }
+QCheckBox::indicator { width: 16px; height: 16px; }
+QCheckBox::indicator:unchecked { background: #313244; border: 1px solid #45475a;
+                                  border-radius: 3px; }
+QCheckBox::indicator:checked { background: #89b4fa; border: 1px solid #89b4fa;
+                                border-radius: 3px; }
+QDialog { background: #1e1e2e; color: #cdd6f4; }
+QFormLayout { color: #cdd6f4; }

@@ -22,6 +22,7 @@ from typing import Optional
 from dataclasses import dataclass, field
 
 import requests
+import markdown
 
 from PySide6.QtWidgets import (
     QApplication,
@@ -48,11 +49,13 @@ from PySide6.QtWidgets import (
     QFormLayout,
     QFileDialog,
     QProgressBar,
-    QToolBar,
     QFrame,
+    QTabBar,
+    QStackedWidget,
 )
 from PySide6.QtCore import Qt, QThread, Signal, QTimer
 from PySide6.QtGui import QFont, QColor, QAction, QIcon
+from PySide6.QtWebEngineWidgets import QWebEngineView
 
 
 # ──────────────────────────────────────────────
@@ -1029,50 +1032,72 @@ class QMDMainWindow(QMainWindow):
         self.search_btn.clicked.connect(self._do_search)
         row2.addWidget(self.search_btn)
 
-        # Status 버튼 제거됨
-
         search_group_layout.addLayout(row2)
         search_layout.addWidget(search_group)
 
-        # Results + Preview
+        # === Results area: two QTabWidgets in a QSplitter ===
         splitter = QSplitter(Qt.Orientation.Horizontal)
+        splitter.setHandleWidth(0)
 
-        left_widget = QWidget()
-        left_layout = QVBoxLayout(left_widget)
-        left_layout.setContentsMargins(0, 0, 0, 0)
-        self.result_label = QLabel("Results: 0")
-        self.result_label.setFont(QFont(MONO_FONT, 10))
-        left_layout.addWidget(self.result_label)
+        # Left: Result list in QTabWidget
+        self.result_tabs = QTabWidget()
+        self.result_tabs.setStyleSheet(
+            """
+            QTabWidget::pane {
+                border: 1px solid #45475a;
+                border-right: none;
+                background: #181825;
+            }
+        """
+        )
+
+        result_widget = QWidget()
+        result_layout = QVBoxLayout(result_widget)
+        result_layout.setContentsMargins(0, 0, 0, 0)
+        result_layout.setSpacing(0)
 
         self.result_list = QListWidget()
         self.result_list.setFont(QFont(MONO_FONT, 10))
+        self.result_list.setStyleSheet("QListWidget { border: none; }")
         self.result_list.currentRowChanged.connect(self._on_result_selected)
-        left_layout.addWidget(self.result_list)
-        splitter.addWidget(left_widget)
+        result_layout.addWidget(self.result_list)
 
-        right_widget = QWidget()
-        right_layout = QVBoxLayout(right_widget)
-        right_layout.setContentsMargins(0, 0, 0, 0)
+        self.result_tabs.addTab(result_widget, "Results (0)")
+        splitter.addWidget(self.result_tabs)
 
+        # Right: Document views in QTabWidget
         self.doc_tabs = QTabWidget()
+        self.doc_tabs.setStyleSheet(
+            """
+            QTabWidget::pane {
+                border: 1px solid #45475a;
+                background: #181825;
+            }
+        """
+        )
 
         self.snippet_view = QTextEdit()
         self.snippet_view.setReadOnly(True)
         self.snippet_view.setFont(QFont(MONO_FONT, 11))
+        self.snippet_view.setStyleSheet("QTextEdit { border: none; }")
         self.doc_tabs.addTab(self.snippet_view, "Snippet")
 
         self.doc_view = QTextEdit()
         self.doc_view.setReadOnly(True)
         self.doc_view.setFont(QFont(MONO_FONT, 11))
+        self.doc_view.setStyleSheet("QTextEdit { border: none; }")
         self.doc_tabs.addTab(self.doc_view, "Full Document")
+
+        self.preview_view = QWebEngineView()
+        self.doc_tabs.addTab(self.preview_view, "Preview")
 
         self.meta_view = QTextEdit()
         self.meta_view.setReadOnly(True)
         self.meta_view.setFont(QFont(MONO_FONT, 10))
+        self.meta_view.setStyleSheet("QTextEdit { border: none; }")
         self.doc_tabs.addTab(self.meta_view, "Metadata")
 
-        right_layout.addWidget(self.doc_tabs)
-        splitter.addWidget(right_widget)
+        splitter.addWidget(self.doc_tabs)
         splitter.setSizes([400, 700])
 
         search_layout.addWidget(splitter, stretch=1)
@@ -1104,7 +1129,6 @@ class QMDMainWindow(QMainWindow):
         main_layout.addWidget(self.main_tabs)
 
         self.statusBar().showMessage("Ready")
-
         self.main_tabs.currentChanged.connect(self._on_tab_changed)
 
     def _on_tab_changed(self, index: int):
@@ -1142,6 +1166,7 @@ class QMDMainWindow(QMainWindow):
         self.search_btn.setEnabled(False)
         self.statusBar().showMessage(f"Searching: {query}...")
         self.result_list.clear()
+        self.result_tabs.setTabText(0, "Results (0)")
         self.snippet_view.clear()
         self.doc_view.clear()
         self.meta_view.clear()
@@ -1160,7 +1185,7 @@ class QMDMainWindow(QMainWindow):
 
     def _on_search_done(self, results: list[SearchResult]):
         self.current_results = results
-        self.result_label.setText(f"Results: {len(results)}")
+        self.result_tabs.setTabText(0, f"Results ({len(results)})")
         self.search_btn.setEnabled(True)
 
         for r in results:
@@ -1224,6 +1249,125 @@ class QMDMainWindow(QMainWindow):
 
     def _on_doc_loaded(self, content: str):
         self.doc_view.setPlainText(content)
+        self._render_preview(content)
+
+    def _render_preview(self, md_text: str):
+        """Convert markdown to HTML and display in preview tab."""
+        extensions = [
+            "markdown.extensions.fenced_code",
+            "markdown.extensions.tables",
+            "markdown.extensions.toc",
+            "markdown.extensions.codehilite",
+            "markdown.extensions.nl2br",
+            "markdown.extensions.sane_lists",
+        ]
+        extension_configs = {
+            "markdown.extensions.codehilite": {
+                "css_class": "highlight",
+                "guess_lang": False,
+            }
+        }
+
+        body_html = markdown.markdown(
+            md_text,
+            extensions=extensions,
+            extension_configs=extension_configs,
+        )
+
+        full_html = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    body {{
+        background: #1e1e2e;
+        color: #cdd6f4;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
+        padding: 20px 32px;
+        max-width: 860px;
+        margin: 0 auto;
+    }}
+    h1 {{ color: #89b4fa; border-bottom: 1px solid #45475a; padding-bottom: 8px; }}
+    h2 {{ color: #89b4fa; border-bottom: 1px solid #45475a; padding-bottom: 6px; }}
+    h3 {{ color: #74c7ec; }}
+    h4, h5, h6 {{ color: #94e2d5; }}
+    a {{ color: #89b4fa; text-decoration: none; }}
+    a:hover {{ text-decoration: underline; }}
+    code {{
+        background: #313244;
+        color: #fab387;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: "{MONO_FONT}", monospace;
+        font-size: 0.9em;
+    }}
+    pre {{
+        background: #181825;
+        border: 1px solid #45475a;
+        border-radius: 6px;
+        padding: 16px;
+        overflow-x: auto;
+    }}
+    pre code {{
+        background: none;
+        color: #cdd6f4;
+        padding: 0;
+    }}
+    blockquote {{
+        border-left: 4px solid #89b4fa;
+        margin: 16px 0;
+        padding: 8px 16px;
+        background: #181825;
+        color: #a6adc8;
+    }}
+    table {{
+        border-collapse: collapse;
+        width: 100%;
+        margin: 16px 0;
+    }}
+    th, td {{
+        border: 1px solid #45475a;
+        padding: 8px 12px;
+        text-align: left;
+    }}
+    th {{
+        background: #313244;
+        color: #89b4fa;
+        font-weight: 600;
+    }}
+    tr:nth-child(even) {{
+        background: #181825;
+    }}
+    hr {{
+        border: none;
+        border-top: 1px solid #45475a;
+        margin: 24px 0;
+    }}
+    ul, ol {{
+        padding-left: 24px;
+    }}
+    li {{
+        margin: 4px 0;
+    }}
+    img {{
+        max-width: 100%;
+        border-radius: 6px;
+    }}
+    .highlight {{
+        background: #181825;
+        border-radius: 6px;
+        padding: 16px;
+    }}
+</style>
+</head>
+<body>
+{body_html}
+</body>
+</html>"""
+
+        self.preview_view.setHtml(full_html)
 
     def _on_doc_error(self, msg: str):
         self.doc_view.setPlainText(f"Error loading document:\n{msg}")
@@ -1315,6 +1459,10 @@ class EmbedWorker(QThread):
                 text=True,
             )
 
+            if process.stdout is None:
+                self.error.emit("Failed to capture stdout")
+                return
+
             for line in process.stdout:
                 line = line.strip()
                 if not line:
@@ -1373,48 +1521,9 @@ def main():
 
     app = QApplication(sys.argv)
 
-    app.setStyleSheet(
-        """
-        QMainWindow { background: #1e1e2e; color: #cdd6f4; }
-        QGroupBox { color: #cdd6f4; border: 1px solid #45475a; border-radius: 6px;
-                     margin-top: 8px; padding-top: 14px; }
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 4px; }
-        QLineEdit { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
-                     border-radius: 4px; padding: 6px; }
-        QComboBox { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
-                     border-radius: 4px; padding: 4px; }
-        QComboBox QAbstractItemView { background: #313244; color: #cdd6f4; }
-        QSpinBox { background: #313244; color: #cdd6f4; border: 1px solid #45475a;
-                    border-radius: 4px; padding: 4px; }
-        QPushButton { background: #89b4fa; color: #1e1e2e; border: none;
-                       border-radius: 4px; padding: 6px 16px; font-weight: bold; }
-        QPushButton:hover { background: #74c7ec; }
-        QPushButton:disabled { background: #585b70; color: #6c7086; }
-        QListWidget { background: #181825; color: #cdd6f4; border: 1px solid #45475a;
-                       border-radius: 4px; }
-        QListWidget::item:selected { background: #45475a; }
-        QTextEdit { background: #181825; color: #cdd6f4; border: 1px solid #45475a;
-                     border-radius: 4px; }
-        QTabWidget::pane { border: 1px solid #45475a; background: #181825; }
-        QTabBar::tab { background: #313244; color: #cdd6f4; padding: 6px 16px;
-                        border-top-left-radius: 4px; border-top-right-radius: 4px; }
-        QTabBar::tab:selected { background: #45475a; }
-        QLabel { color: #cdd6f4; }
-        QStatusBar { color: #a6adc8; background: #181825; }
-        QSplitter::handle { background: #45475a; width: 2px; }
-        QProgressBar { background: #313244; border: 1px solid #45475a; border-radius: 4px;
-                        text-align: center; color: #cdd6f4; }
-        QProgressBar::chunk { background: #89b4fa; border-radius: 3px; }
-        QCheckBox { color: #cdd6f4; }
-        QCheckBox::indicator { width: 16px; height: 16px; }
-        QCheckBox::indicator:unchecked { background: #313244; border: 1px solid #45475a;
-                                          border-radius: 3px; }
-        QCheckBox::indicator:checked { background: #89b4fa; border: 1px solid #89b4fa;
-                                        border-radius: 3px; }
-        QDialog { background: #1e1e2e; color: #cdd6f4; }
-        QFormLayout { color: #cdd6f4; }
-    """
-    )
+    style_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
+    with open(style_path, "r") as f:
+        app.setStyleSheet(f.read())
 
     window = QMDMainWindow(backend)
     window.show()
