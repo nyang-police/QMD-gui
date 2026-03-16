@@ -20,8 +20,8 @@ QMD is an on-device search engine that indexes your markdown documents locally a
 
 ## Requirements
 
-- Python 3.10+
-- [QMD](https://github.com/tobi/qmd) installed with `qmd` command available in PATH
+- uv with Python 3.10+ (tested on 3.13)
+- [QMD](https://github.com/tobi/qmd)
 - PySide6
 - PySide6-WebEngine (bundled with PySide6 on macOS)
 - markdown
@@ -32,13 +32,7 @@ QMD is an on-device search engine that indexes your markdown documents locally a
 ```bash
 git clone https://github.com/nyang-police/QMD-gui.git
 cd qmd-gui
-pip install PySide6 markdown requests
-```
-
-With `uv`:
-
-```bash
-uv add PySide6 markdown requests
+uv sync
 ```
 
 ## Usage
@@ -60,14 +54,14 @@ Connects to the MCP server for faster responses. Models stay loaded in memory ac
 qmd mcp --http
 
 # Run the GUI
-python qmd_gui.py --mcp
+uv run qmd_gui.py --mcp
 ```
 
 Custom port:
 
 ```bash
 qmd mcp --http --port 9000
-python qmd_gui.py --mcp --port 9000
+uv run qmd_gui.py --mcp --port 9000
 ```
 
 Falls back to CLI mode automatically if the MCP server is unreachable.
@@ -114,8 +108,8 @@ Displays QMD index status information.
 
 |Mode|Command|Description|
 |---|---|---|
-|CLI (default)|`python qmd_gui.py`|No server needed, calls `qmd` via subprocess|
-|MCP HTTP|`python qmd_gui.py --mcp`|Faster responses, models stay in memory, requires `qmd mcp --http`|
+|CLI (default)|`uv run qmd_gui.py`|No server needed, calls `qmd` via subprocess|
+|MCP HTTP|`uv run qmd_gui.py --mcp`|Faster responses, models stay in memory, requires `qmd mcp --http`|
 
 ## Customizing the Theme
 
