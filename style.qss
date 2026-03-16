@@ -37,3 +37,47 @@ QCheckBox::indicator:checked { background: #89b4fa; border: 1px solid #89b4fa;
                                 border-radius: 3px; }
 QDialog { background: #1e1e2e; color: #cdd6f4; }
 QFormLayout { color: #cdd6f4; }
+
+/* Collections tab — left pane */
+QTabWidget#collectionTabs::pane {
+    border: none;
+    border-top: 1px solid #45475a;
+    background: #181825;
+}
+
+/* Collections tab — right pane */
+QTabWidget#filesTabs::pane {
+    border: none;
+    border-top: 1px solid #45475a;
+    border-left: 1px solid #45475a;
+    background: #181825;
+}
+
+/* Collections tab — detail view */
+QTextEdit#detailView {
+    border: none;
+    border-top: 1px solid #45475a;
+}
+
+/* Search tab — left pane */
+QTabWidget#resultTabs::pane {
+    border: 1px solid #45475a;
+    border-right: none;
+    background: #181825;
+}
+
+/* Search tab — right pane */
+QTabWidget#docTabs::pane {
+    border: 1px solid #45475a;
+    background: #181825;
+}
+
+/* Inner widgets — no border (parent pane handles it) */
+QListWidget#resultList,
+QListWidget#collectionList,
+QListWidget#fileList,
+QTextEdit#snippetView,
+QTextEdit#docView,
+QTextEdit#metaView {
+    border: none;
+}

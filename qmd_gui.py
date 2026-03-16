@@ -671,41 +671,55 @@ class CollectionPanel(QWidget):
 
         # ── Upper area: Collection list (left) + File list (right) ──
         upper_splitter = QSplitter(Qt.Orientation.Horizontal)
+        upper_splitter.setHandleWidth(0)
 
-        # Left: Collection list
-        left_widget = QWidget()
-        left_layout = QVBoxLayout(left_widget)
-        left_layout.setContentsMargins(0, 0, 0, 0)
-        left_layout.addWidget(QLabel("Collections"))
+        # Left: Collection list in QTabWidget
+        self.collection_tabs = QTabWidget()
+        self.collection_tabs.setObjectName("collectionTabs")
+
+        collection_widget = QWidget()
+        collection_layout = QVBoxLayout(collection_widget)
+        collection_layout.setContentsMargins(0, 0, 0, 0)
+        collection_layout.setSpacing(0)
 
         self.collection_list = QListWidget()
         self.collection_list.setFont(QFont(MONO_FONT, 11))
+        self.collection_list.setObjectName("collectionList")
         self.collection_list.currentRowChanged.connect(self._on_selection_changed)
-        left_layout.addWidget(self.collection_list)
-        upper_splitter.addWidget(left_widget)
+        collection_layout.addWidget(self.collection_list)
 
-        # Right: File list
-        right_widget = QWidget()
-        right_layout = QVBoxLayout(right_widget)
-        right_layout.setContentsMargins(0, 0, 0, 0)
-        self.files_label = QLabel("Files")
-        right_layout.addWidget(self.files_label)
+        self.collection_tabs.addTab(collection_widget, "Collections")
+        upper_splitter.addWidget(self.collection_tabs)
+
+        # Right: File list in QTabWidget
+        self.files_tabs = QTabWidget()
+        self.files_tabs.setObjectName("filesTabs")
+
+        files_widget = QWidget()
+        files_layout = QVBoxLayout(files_widget)
+        files_layout.setContentsMargins(0, 0, 0, 0)
+        files_layout.setSpacing(0)
 
         self.file_list = QListWidget()
         self.file_list.setFont(QFont(MONO_FONT, 10))
-        right_layout.addWidget(self.file_list)
-        upper_splitter.addWidget(right_widget)
+        self.file_list.setObjectName("fileList")
+        files_layout.addWidget(self.file_list)
+
+        self.files_tabs.addTab(files_widget, "Files")
+        upper_splitter.addWidget(self.files_tabs)
 
         upper_splitter.setSizes([300, 500])
 
         # ── Lower area: Collection detail info ──
         self.detail_view = QTextEdit()
+        self.detail_view.setObjectName("detailView")
         self.detail_view.setReadOnly(True)
         self.detail_view.setFont(QFont(MONO_FONT, 10))
         self.detail_view.setMaximumHeight(120)
 
         # ── Combine upper + lower with vertical splitter ──
         main_splitter = QSplitter(Qt.Orientation.Vertical)
+        main_splitter.setHandleWidth(0)
         main_splitter.addWidget(upper_splitter)
         main_splitter.addWidget(self.detail_view)
         main_splitter.setSizes([400, 120])
@@ -752,7 +766,6 @@ class CollectionPanel(QWidget):
         if has_selection and row < len(self.collections):
             col = self.collections[row]
 
-            # 하단: 컬렉션 정보
             details = [
                 f"Name:       {col.name}",
                 f"Path:       {col.path}",
@@ -761,11 +774,9 @@ class CollectionPanel(QWidget):
             ]
             self.detail_view.setPlainText("\n".join(details))
 
-            # 오른쪽: 파일 목록
-            self.files_label.setText(f"Files — {col.name}")
+            self.files_tabs.setTabText(0, f"Files — {col.name}")
             self.file_list.clear()
             self.file_list.addItem("Loading...")
-            # 별도 스레드에서 파일 목록 로드
             self._file_worker = CollectionWorker(self.backend.list_files, col.name)
             self._file_worker.finished.connect(self._on_files_loaded)
             self._file_worker.error.connect(self._on_files_error)
@@ -773,7 +784,7 @@ class CollectionPanel(QWidget):
         else:
             self.detail_view.clear()
             self.file_list.clear()
-            self.files_label.setText("Files")
+            self.files_tabs.setTabText(0, "Files")
 
     def _on_files_loaded(self, output: str):
         self.file_list.clear()
@@ -783,7 +794,7 @@ class CollectionPanel(QWidget):
                 self.file_list.addItem(line)
         count = self.file_list.count()
         name = self._get_selected_name() or ""
-        self.files_label.setText(f"Files — {name} ({count})")
+        self.files_tabs.setTabText(0, f"Files — {name} ({count})")
 
     def _on_files_error(self, msg: str):
         self.file_list.clear()
@@ -794,7 +805,7 @@ class CollectionPanel(QWidget):
         self.collection_list.addItem("Loading...")
         self.detail_view.clear()
         self.file_list.clear()
-        self.files_label.setText("Files")
+        self.files_tabs.setTabText(0, "Files")
         self.remove_btn.setEnabled(False)
         self.rename_btn.setEnabled(False)
 
@@ -1041,15 +1052,7 @@ class QMDMainWindow(QMainWindow):
 
         # Left: Result list in QTabWidget
         self.result_tabs = QTabWidget()
-        self.result_tabs.setStyleSheet(
-            """
-            QTabWidget::pane {
-                border: 1px solid #45475a;
-                border-right: none;
-                background: #181825;
-            }
-        """
-        )
+        self.result_tabs.setObjectName("resultTabs")
 
         result_widget = QWidget()
         result_layout = QVBoxLayout(result_widget)
@@ -1058,7 +1061,7 @@ class QMDMainWindow(QMainWindow):
 
         self.result_list = QListWidget()
         self.result_list.setFont(QFont(MONO_FONT, 10))
-        self.result_list.setStyleSheet("QListWidget { border: none; }")
+        self.result_list.setObjectName("resultList")
         self.result_list.currentRowChanged.connect(self._on_result_selected)
         result_layout.addWidget(self.result_list)
 
@@ -1067,34 +1070,28 @@ class QMDMainWindow(QMainWindow):
 
         # Right: Document views in QTabWidget
         self.doc_tabs = QTabWidget()
-        self.doc_tabs.setStyleSheet(
-            """
-            QTabWidget::pane {
-                border: 1px solid #45475a;
-                background: #181825;
-            }
-        """
-        )
+        self.doc_tabs.setObjectName("docTabs")
 
         self.snippet_view = QTextEdit()
         self.snippet_view.setReadOnly(True)
         self.snippet_view.setFont(QFont(MONO_FONT, 11))
-        self.snippet_view.setStyleSheet("QTextEdit { border: none; }")
+        self.snippet_view.setObjectName("snippetView")
         self.doc_tabs.addTab(self.snippet_view, "Snippet")
 
         self.doc_view = QTextEdit()
         self.doc_view.setReadOnly(True)
         self.doc_view.setFont(QFont(MONO_FONT, 11))
-        self.doc_view.setStyleSheet("QTextEdit { border: none; }")
+        self.doc_view.setObjectName("docView")
         self.doc_tabs.addTab(self.doc_view, "Full Document")
 
         self.preview_view = QWebEngineView()
+        self.preview_view.setObjectName("previewView")
         self.doc_tabs.addTab(self.preview_view, "Preview")
 
         self.meta_view = QTextEdit()
         self.meta_view.setReadOnly(True)
         self.meta_view.setFont(QFont(MONO_FONT, 10))
-        self.meta_view.setStyleSheet("QTextEdit { border: none; }")
+        self.meta_view.setObjectName("metaView")
         self.doc_tabs.addTab(self.meta_view, "Metadata")
 
         splitter.addWidget(self.doc_tabs)
