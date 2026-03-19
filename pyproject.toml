@@ -9,3 +9,10 @@ dependencies = [
     "pyside6>=6.10.2",
     "requests>=2.32.5",
 ]
+
+[project.scripts]
+qmd-gui = "qmd_gui:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

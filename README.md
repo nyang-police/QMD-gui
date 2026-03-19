@@ -35,6 +35,20 @@ cd qmd-gui
 uv sync
 ```
 
+### Global Install
+
+To install qmd-gui as as system-wide command accessible from any directory:
+
+```bash
+uv tool install -e /path/to/qmd-gui/repository/root
+```
+
+To uninstall:
+
+```bash
+uv tool uninstall qmd-gui
+```
+
 ## Usage
 
 ### CLI Mode (default)
@@ -43,6 +57,9 @@ Calls `qmd` via subprocess. No server required.
 
 ```bash
 uv run qmd_gui.py
+
+# Or, if globallh installed:
+qmd-gui
 ```
 
 ### MCP HTTP Mode
@@ -55,13 +72,19 @@ qmd mcp --http
 
 # Run the GUI
 uv run qmd_gui.py --mcp
+
+# Or, if globallh installed:
+qmd-gui --mcp
 ```
 
 Custom port:
 
 ```bash
 qmd mcp --http --port 9000
+
 uv run qmd_gui.py --mcp --port 9000
+# Or, if globallh installed:
+qmd-gui --mcp --port 9000
 ```
 
 Falls back to CLI mode automatically if the MCP server is unreachable.
@@ -70,7 +93,7 @@ Falls back to CLI mode automatically if the MCP server is unreachable.
 
 ```text
 qmd-gui/
-├── qmd_gui.py        # Main application
+├── qmd_gui.py        # Main application (dependencies, entry point, build system)
 ├── embed_runner.py    # PTY proxy for embedding progress parsing
 ├── style.qss          # Qt stylesheet (Catppuccin Mocha theme)
 └── README.md
@@ -108,8 +131,8 @@ Displays QMD index status information.
 
 |Mode|Command|Description|
 |---|---|---|
-|CLI (default)|`uv run qmd_gui.py`|No server needed, calls `qmd` via subprocess|
-|MCP HTTP|`uv run qmd_gui.py --mcp`|Faster responses, models stay in memory, requires `qmd mcp --http`|
+|CLI (default)|`uv run qmd_gui.py` or `qmd-gui`|No server needed, calls `qmd` via subprocess|
+|MCP HTTP|`uv run qmd_gui.py --mcp` or `qmd-gui --mcp`|Faster responses, models stay in memory, requires `qmd mcp --http`|
 
 ## Customizing the Theme
 
