@@ -1,0 +1,3969 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "qthread_worker_family",
+        "label": "Qt worker thread family for async backend ops",
+        "nodes": [
+          "qmd_gui_searchworker",
+          "qmd_gui_docworker",
+          "qmd_gui_collectionworker",
+          "qmd_gui_asyncworker",
+          "qmd_gui_embedworker"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "qmd_gui.py"
+      },
+      {
+        "id": "embed_progress_pipeline",
+        "label": "Embedding progress pipeline (UI panel -> EmbedWorker -> PTY runner -> qmd embed)",
+        "nodes": [
+          "qmd_gui_collectionpanel",
+          "qmd_gui_embedworker",
+          "embed_runner_main",
+          "readme_pty_progress_parsing"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "qmd_gui.py"
+      },
+      {
+        "id": "dual_backend_strategy",
+        "label": "Dual-backend interchangeable interface used by workers and main window",
+        "nodes": [
+          "qmd_gui_clibackend",
+          "qmd_gui_mcpbackend",
+          "qmd_gui_qmdmainwindow",
+          "readme_dual_backend"
+        ],
+        "relation": "implement",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "qmd_gui.py"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "qmd_gui.py",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1",
+      "id": "qmd_gui_py",
+      "community": 2,
+      "norm_label": "qmd_gui.py"
+    },
+    {
+      "label": "SearchResult",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L79",
+      "id": "qmd_gui_qmd_gui_searchresult",
+      "community": 2,
+      "norm_label": "searchresult"
+    },
+    {
+      "label": "CollectionInfo",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L90",
+      "id": "qmd_gui_qmd_gui_collectioninfo",
+      "community": 7,
+      "norm_label": "collectioninfo"
+    },
+    {
+      "label": "CLIBackend",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L103",
+      "id": "qmd_gui_qmd_gui_clibackend",
+      "community": 5,
+      "norm_label": "clibackend"
+    },
+    {
+      "label": ".search()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L106",
+      "id": "qmd_gui_qmd_gui_clibackend_search",
+      "community": 8,
+      "norm_label": ".search()"
+    },
+    {
+      "label": ".get_document()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L128",
+      "id": "qmd_gui_qmd_gui_clibackend_get_document",
+      "community": 5,
+      "norm_label": ".get_document()"
+    },
+    {
+      "label": ".get_collections()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L137",
+      "id": "qmd_gui_qmd_gui_clibackend_get_collections",
+      "community": 5,
+      "norm_label": ".get_collections()"
+    },
+    {
+      "label": ".get_status()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L189",
+      "id": "qmd_gui_qmd_gui_clibackend_get_status",
+      "community": 5,
+      "norm_label": ".get_status()"
+    },
+    {
+      "label": ".add_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L195",
+      "id": "qmd_gui_qmd_gui_clibackend_add_collection",
+      "community": 5,
+      "norm_label": ".add_collection()"
+    },
+    {
+      "label": ".remove_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L204",
+      "id": "qmd_gui_qmd_gui_clibackend_remove_collection",
+      "community": 5,
+      "norm_label": ".remove_collection()"
+    },
+    {
+      "label": ".rename_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L215",
+      "id": "qmd_gui_qmd_gui_clibackend_rename_collection",
+      "community": 5,
+      "norm_label": ".rename_collection()"
+    },
+    {
+      "label": ".update_index()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L226",
+      "id": "qmd_gui_qmd_gui_clibackend_update_index",
+      "community": 5,
+      "norm_label": ".update_index()"
+    },
+    {
+      "label": ".embed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L235",
+      "id": "qmd_gui_qmd_gui_clibackend_embed",
+      "community": 5,
+      "norm_label": ".embed()"
+    },
+    {
+      "label": ".list_files()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L244",
+      "id": "qmd_gui_qmd_gui_clibackend_list_files",
+      "community": 5,
+      "norm_label": ".list_files()"
+    },
+    {
+      "label": "._parse_results()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L252",
+      "id": "qmd_gui_qmd_gui_clibackend_parse_results",
+      "community": 2,
+      "norm_label": "._parse_results()"
+    },
+    {
+      "label": "MCPBackend",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L281",
+      "id": "qmd_gui_qmd_gui_mcpbackend",
+      "community": 4,
+      "norm_label": "mcpbackend"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L284",
+      "id": "qmd_gui_qmd_gui_mcpbackend_init",
+      "community": 4,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._next_id()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L290",
+      "id": "qmd_gui_qmd_gui_mcpbackend_next_id",
+      "community": 4,
+      "norm_label": "._next_id()"
+    },
+    {
+      "label": "._call()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L294",
+      "id": "qmd_gui_qmd_gui_mcpbackend_call",
+      "community": 4,
+      "norm_label": "._call()"
+    },
+    {
+      "label": "._initialize()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L316",
+      "id": "qmd_gui_qmd_gui_mcpbackend_initialize",
+      "community": 4,
+      "norm_label": "._initialize()"
+    },
+    {
+      "label": "._call_tool()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L333",
+      "id": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "community": 7,
+      "norm_label": "._call_tool()"
+    },
+    {
+      "label": ".search()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L344",
+      "id": "qmd_gui_qmd_gui_mcpbackend_search",
+      "community": 8,
+      "norm_label": ".search()"
+    },
+    {
+      "label": ".get_document()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L364",
+      "id": "qmd_gui_qmd_gui_mcpbackend_get_document",
+      "community": 7,
+      "norm_label": ".get_document()"
+    },
+    {
+      "label": ".get_collections()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L372",
+      "id": "qmd_gui_qmd_gui_mcpbackend_get_collections",
+      "community": 7,
+      "norm_label": ".get_collections()"
+    },
+    {
+      "label": ".get_status()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L386",
+      "id": "qmd_gui_qmd_gui_mcpbackend_get_status",
+      "community": 7,
+      "norm_label": ".get_status()"
+    },
+    {
+      "label": ".add_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L395",
+      "id": "qmd_gui_qmd_gui_mcpbackend_add_collection",
+      "community": 4,
+      "norm_label": ".add_collection()"
+    },
+    {
+      "label": ".remove_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L398",
+      "id": "qmd_gui_qmd_gui_mcpbackend_remove_collection",
+      "community": 4,
+      "norm_label": ".remove_collection()"
+    },
+    {
+      "label": ".rename_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L401",
+      "id": "qmd_gui_qmd_gui_mcpbackend_rename_collection",
+      "community": 4,
+      "norm_label": ".rename_collection()"
+    },
+    {
+      "label": ".update_index()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L404",
+      "id": "qmd_gui_qmd_gui_mcpbackend_update_index",
+      "community": 4,
+      "norm_label": ".update_index()"
+    },
+    {
+      "label": ".embed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L407",
+      "id": "qmd_gui_qmd_gui_mcpbackend_embed",
+      "community": 4,
+      "norm_label": ".embed()"
+    },
+    {
+      "label": ".list_files()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L410",
+      "id": "qmd_gui_qmd_gui_mcpbackend_list_files",
+      "community": 4,
+      "norm_label": ".list_files()"
+    },
+    {
+      "label": ".is_healthy()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L413",
+      "id": "qmd_gui_qmd_gui_mcpbackend_is_healthy",
+      "community": 4,
+      "norm_label": ".is_healthy()"
+    },
+    {
+      "label": "._parse_results()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L420",
+      "id": "qmd_gui_qmd_gui_mcpbackend_parse_results",
+      "community": 8,
+      "norm_label": "._parse_results()"
+    },
+    {
+      "label": "SearchWorker",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L455",
+      "id": "qmd_gui_qmd_gui_searchworker",
+      "community": 2,
+      "norm_label": "searchworker"
+    },
+    {
+      "label": "QThread",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "qthread",
+      "community": 2,
+      "norm_label": "qthread"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L459",
+      "id": "qmd_gui_qmd_gui_searchworker_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L468",
+      "id": "qmd_gui_qmd_gui_searchworker_run",
+      "community": 8,
+      "norm_label": ".run()"
+    },
+    {
+      "label": "DocWorker",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L482",
+      "id": "qmd_gui_qmd_gui_docworker",
+      "community": 2,
+      "norm_label": "docworker"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L486",
+      "id": "qmd_gui_qmd_gui_docworker_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L491",
+      "id": "qmd_gui_qmd_gui_docworker_run",
+      "community": 7,
+      "norm_label": ".run()"
+    },
+    {
+      "label": "CollectionWorker",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L499",
+      "id": "qmd_gui_qmd_gui_collectionworker",
+      "community": 2,
+      "norm_label": "collectionworker"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L505",
+      "id": "qmd_gui_qmd_gui_collectionworker_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L510",
+      "id": "qmd_gui_qmd_gui_collectionworker_run",
+      "community": 2,
+      "norm_label": ".run()"
+    },
+    {
+      "label": "AddCollectionDialog",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L523",
+      "id": "qmd_gui_qmd_gui_addcollectiondialog",
+      "community": 6,
+      "norm_label": "addcollectiondialog"
+    },
+    {
+      "label": "QDialog",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "qdialog",
+      "community": 6,
+      "norm_label": "qdialog"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L526",
+      "id": "qmd_gui_qmd_gui_addcollectiondialog_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._browse()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L561",
+      "id": "qmd_gui_qmd_gui_addcollectiondialog_browse",
+      "community": 6,
+      "norm_label": "._browse()"
+    },
+    {
+      "label": "._validate_and_accept()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L569",
+      "id": "qmd_gui_qmd_gui_addcollectiondialog_validate_and_accept",
+      "community": 6,
+      "norm_label": "._validate_and_accept()"
+    },
+    {
+      "label": ".get_values()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L581",
+      "id": "qmd_gui_qmd_gui_addcollectiondialog_get_values",
+      "community": 6,
+      "norm_label": ".get_values()"
+    },
+    {
+      "label": "RenameCollectionDialog",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L589",
+      "id": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "community": 6,
+      "norm_label": "renamecollectiondialog"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L592",
+      "id": "qmd_gui_qmd_gui_renamecollectiondialog_init",
+      "community": 6,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._validate_and_accept()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L616",
+      "id": "qmd_gui_qmd_gui_renamecollectiondialog_validate_and_accept",
+      "community": 6,
+      "norm_label": "._validate_and_accept()"
+    },
+    {
+      "label": ".get_new_name()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L622",
+      "id": "qmd_gui_qmd_gui_renamecollectiondialog_get_new_name",
+      "community": 0,
+      "norm_label": ".get_new_name()"
+    },
+    {
+      "label": "CollectionPanel",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L631",
+      "id": "qmd_gui_qmd_gui_collectionpanel",
+      "community": 0,
+      "norm_label": "collectionpanel"
+    },
+    {
+      "label": "QWidget",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "qwidget",
+      "community": 0,
+      "norm_label": "qwidget"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L636",
+      "id": "qmd_gui_qmd_gui_collectionpanel_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._build_ui()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L643",
+      "id": "qmd_gui_qmd_gui_collectionpanel_build_ui",
+      "community": 0,
+      "norm_label": "._build_ui()"
+    },
+    {
+      "label": "._on_selection_changed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L761",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_selection_changed",
+      "community": 2,
+      "norm_label": "._on_selection_changed()"
+    },
+    {
+      "label": "._on_files_loaded()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L789",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_files_loaded",
+      "community": 0,
+      "norm_label": "._on_files_loaded()"
+    },
+    {
+      "label": "._on_files_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L799",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_files_error",
+      "community": 0,
+      "norm_label": "._on_files_error()"
+    },
+    {
+      "label": ".refresh_collections()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L803",
+      "id": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "community": 0,
+      "norm_label": ".refresh_collections()"
+    },
+    {
+      "label": "._on_refresh_done()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L817",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_refresh_done",
+      "community": 0,
+      "norm_label": "._on_refresh_done()"
+    },
+    {
+      "label": "._on_refresh_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L824",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_refresh_error",
+      "community": 0,
+      "norm_label": "._on_refresh_error()"
+    },
+    {
+      "label": "._get_selected_name()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L828",
+      "id": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "community": 0,
+      "norm_label": "._get_selected_name()"
+    },
+    {
+      "label": "._set_busy()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L834",
+      "id": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "community": 0,
+      "norm_label": "._set_busy()"
+    },
+    {
+      "label": "._on_worker_finished()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L849",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_worker_finished",
+      "community": 0,
+      "norm_label": "._on_worker_finished()"
+    },
+    {
+      "label": "._on_worker_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L856",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_worker_error",
+      "community": 0,
+      "norm_label": "._on_worker_error()"
+    },
+    {
+      "label": "._run_worker()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L860",
+      "id": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "community": 0,
+      "norm_label": "._run_worker()"
+    },
+    {
+      "label": "._add_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L867",
+      "id": "qmd_gui_qmd_gui_collectionpanel_add_collection",
+      "community": 6,
+      "norm_label": "._add_collection()"
+    },
+    {
+      "label": "._remove_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L879",
+      "id": "qmd_gui_qmd_gui_collectionpanel_remove_collection",
+      "community": 0,
+      "norm_label": "._remove_collection()"
+    },
+    {
+      "label": "._rename_collection()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L898",
+      "id": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "community": 0,
+      "norm_label": "._rename_collection()"
+    },
+    {
+      "label": "._update_index()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L913",
+      "id": "qmd_gui_qmd_gui_collectionpanel_update_index",
+      "community": 0,
+      "norm_label": "._update_index()"
+    },
+    {
+      "label": "._embed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L922",
+      "id": "qmd_gui_qmd_gui_collectionpanel_embed",
+      "community": 2,
+      "norm_label": "._embed()"
+    },
+    {
+      "label": "._on_embed_progress()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L945",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_embed_progress",
+      "community": 0,
+      "norm_label": "._on_embed_progress()"
+    },
+    {
+      "label": "._on_embed_log()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L949",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_embed_log",
+      "community": 0,
+      "norm_label": "._on_embed_log()"
+    },
+    {
+      "label": "._on_embed_finished()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L960",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_embed_finished",
+      "community": 0,
+      "norm_label": "._on_embed_finished()"
+    },
+    {
+      "label": "._on_embed_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L969",
+      "id": "qmd_gui_qmd_gui_collectionpanel_on_embed_error",
+      "community": 0,
+      "norm_label": "._on_embed_error()"
+    },
+    {
+      "label": "._hide_progress()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L975",
+      "id": "qmd_gui_qmd_gui_collectionpanel_hide_progress",
+      "community": 0,
+      "norm_label": "._hide_progress()"
+    },
+    {
+      "label": "QMDMainWindow",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L987",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow",
+      "community": 3,
+      "norm_label": "qmdmainwindow"
+    },
+    {
+      "label": "QMainWindow",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "qmainwindow",
+      "community": 3,
+      "norm_label": "qmainwindow"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L988",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_init",
+      "community": 3,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._build_ui()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1000",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "community": 0,
+      "norm_label": "._build_ui()"
+    },
+    {
+      "label": "._on_tab_changed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1140",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_tab_changed",
+      "community": 3,
+      "norm_label": "._on_tab_changed()"
+    },
+    {
+      "label": "._refresh_status()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1146",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_refresh_status",
+      "community": 3,
+      "norm_label": "._refresh_status()"
+    },
+    {
+      "label": "._on_collections_changed()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1157",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_changed",
+      "community": 3,
+      "norm_label": "._on_collections_changed()"
+    },
+    {
+      "label": "._get_mode()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1163",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_get_mode",
+      "community": 3,
+      "norm_label": "._get_mode()"
+    },
+    {
+      "label": "._do_search()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1167",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_do_search",
+      "community": 3,
+      "norm_label": "._do_search()"
+    },
+    {
+      "label": "._on_search_done()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1192",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_search_done",
+      "community": 3,
+      "norm_label": "._on_search_done()"
+    },
+    {
+      "label": "._on_search_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1216",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_search_error",
+      "community": 3,
+      "norm_label": "._on_search_error()"
+    },
+    {
+      "label": "._on_result_selected()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1221",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_result_selected",
+      "community": 2,
+      "norm_label": "._on_result_selected()"
+    },
+    {
+      "label": "._on_doc_loaded()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1256",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_doc_loaded",
+      "community": 3,
+      "norm_label": "._on_doc_loaded()"
+    },
+    {
+      "label": "._render_preview()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1260",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_render_preview",
+      "community": 3,
+      "norm_label": "._render_preview()"
+    },
+    {
+      "label": "._on_doc_error()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1378",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_doc_error",
+      "community": 3,
+      "norm_label": "._on_doc_error()"
+    },
+    {
+      "label": "._load_collections()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1381",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_load_collections",
+      "community": 3,
+      "norm_label": "._load_collections()"
+    },
+    {
+      "label": "._on_collections_loaded()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1391",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_loaded",
+      "community": 3,
+      "norm_label": "._on_collections_loaded()"
+    },
+    {
+      "label": "._show_status()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1398",
+      "id": "qmd_gui_qmd_gui_qmdmainwindow_show_status",
+      "community": 7,
+      "norm_label": "._show_status()"
+    },
+    {
+      "label": "AsyncWorker",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1413",
+      "id": "qmd_gui_qmd_gui_asyncworker",
+      "community": 2,
+      "norm_label": "asyncworker"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1419",
+      "id": "qmd_gui_qmd_gui_asyncworker_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1424",
+      "id": "qmd_gui_qmd_gui_asyncworker_run",
+      "community": 2,
+      "norm_label": ".run()"
+    },
+    {
+      "label": "EmbedWorker",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1437",
+      "id": "qmd_gui_qmd_gui_embedworker",
+      "community": 2,
+      "norm_label": "embedworker"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1446",
+      "id": "qmd_gui_qmd_gui_embedworker_init",
+      "community": 2,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1450",
+      "id": "qmd_gui_qmd_gui_embedworker_run",
+      "community": 5,
+      "norm_label": ".run()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1508",
+      "id": "qmd_gui_qmd_gui_main",
+      "community": 4,
+      "norm_label": "main()"
+    },
+    {
+      "label": "QMD backend using subprocess calls.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L104",
+      "id": "qmd_gui_qmd_gui_rationale_104",
+      "community": 5,
+      "norm_label": "qmd backend using subprocess calls."
+    },
+    {
+      "label": "QMD backend using MCP Streamable HTTP (JSON-RPC 2.0).",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L282",
+      "id": "qmd_gui_qmd_gui_rationale_282",
+      "community": 4,
+      "norm_label": "qmd backend using mcp streamable http (json-rpc 2.0)."
+    },
+    {
+      "label": "Generic worker for collection operations.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L500",
+      "id": "qmd_gui_qmd_gui_rationale_500",
+      "community": 2,
+      "norm_label": "generic worker for collection operations."
+    },
+    {
+      "label": "Dialog to add a new collection.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L524",
+      "id": "qmd_gui_qmd_gui_rationale_524",
+      "community": 6,
+      "norm_label": "dialog to add a new collection."
+    },
+    {
+      "label": "Dialog to rename a collection.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L590",
+      "id": "qmd_gui_qmd_gui_rationale_590",
+      "community": 6,
+      "norm_label": "dialog to rename a collection."
+    },
+    {
+      "label": "Panel for managing QMD collections.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L632",
+      "id": "qmd_gui_qmd_gui_rationale_632",
+      "community": 0,
+      "norm_label": "panel for managing qmd collections."
+    },
+    {
+      "label": "Refresh the search tab's collection dropdown.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1158",
+      "id": "qmd_gui_qmd_gui_rationale_1158",
+      "community": 3,
+      "norm_label": "refresh the search tab's collection dropdown."
+    },
+    {
+      "label": "Convert markdown to HTML and display in preview tab.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1261",
+      "id": "qmd_gui_qmd_gui_rationale_1261",
+      "community": 3,
+      "norm_label": "convert markdown to html and display in preview tab."
+    },
+    {
+      "label": "Generic async worker that passes result as object.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1414",
+      "id": "qmd_gui_qmd_gui_rationale_1414",
+      "community": 2,
+      "norm_label": "generic async worker that passes result as object."
+    },
+    {
+      "label": "Worker that runs embed_runner.py and reads JSON progress lines.",
+      "file_type": "rationale",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1438",
+      "id": "qmd_gui_qmd_gui_rationale_1438",
+      "community": 2,
+      "norm_label": "worker that runs embed_runner.py and reads json progress lines."
+    },
+    {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "id": "main_py",
+      "community": 9,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "id": "qmd_gui_main_main",
+      "community": 9,
+      "norm_label": "main()"
+    },
+    {
+      "label": "embed_runner.py",
+      "file_type": "code",
+      "source_file": "embed_runner.py",
+      "source_location": "L1",
+      "id": "embed_runner_py",
+      "community": 10,
+      "norm_label": "embed_runner.py"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "embed_runner.py",
+      "source_location": "L14",
+      "id": "qmd_gui_embed_runner_main",
+      "community": 10,
+      "norm_label": "main()"
+    },
+    {
+      "label": "SearchResult dataclass",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L78-L86",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_searchresult",
+      "community": 1,
+      "norm_label": "searchresult dataclass"
+    },
+    {
+      "label": "CollectionInfo dataclass",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L89-L95",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_collectioninfo",
+      "community": 1,
+      "norm_label": "collectioninfo dataclass"
+    },
+    {
+      "label": "CLIBackend",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L103-L273",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_clibackend",
+      "community": 1,
+      "norm_label": "clibackend"
+    },
+    {
+      "label": "MCPBackend",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L281-L447",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_mcpbackend",
+      "community": 1,
+      "norm_label": "mcpbackend"
+    },
+    {
+      "label": "SearchWorker QThread",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L455-L479",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_searchworker",
+      "community": 1,
+      "norm_label": "searchworker qthread"
+    },
+    {
+      "label": "DocWorker QThread",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L482-L496",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_docworker",
+      "community": 1,
+      "norm_label": "docworker qthread"
+    },
+    {
+      "label": "CollectionWorker QThread",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L499-L515",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_collectionworker",
+      "community": 1,
+      "norm_label": "collectionworker qthread"
+    },
+    {
+      "label": "AsyncWorker QThread",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1413-L1429",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_asyncworker",
+      "community": 1,
+      "norm_label": "asyncworker qthread"
+    },
+    {
+      "label": "EmbedWorker QThread",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1437-L1500",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_embedworker",
+      "community": 1,
+      "norm_label": "embedworker qthread"
+    },
+    {
+      "label": "AddCollectionDialog",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L523-L586",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_addcollectiondialog",
+      "community": 1,
+      "norm_label": "addcollectiondialog"
+    },
+    {
+      "label": "RenameCollectionDialog",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L589-L623",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_renamecollectiondialog",
+      "community": 1,
+      "norm_label": "renamecollectiondialog"
+    },
+    {
+      "label": "CollectionPanel widget",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L631-L979",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_collectionpanel",
+      "community": 1,
+      "norm_label": "collectionpanel widget"
+    },
+    {
+      "label": "QMDMainWindow",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L987-L1405",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_qmdmainwindow",
+      "community": 1,
+      "norm_label": "qmdmainwindow"
+    },
+    {
+      "label": "qmd_gui main entry point",
+      "file_type": "code",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1508-L1536",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "qmd_gui_main",
+      "community": 1,
+      "norm_label": "qmd_gui main entry point"
+    },
+    {
+      "label": "embed_runner main (PTY proxy)",
+      "file_type": "code",
+      "source_file": "embed_runner.py",
+      "source_location": "L14-L80",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "embed_runner_main",
+      "community": 1,
+      "norm_label": "embed_runner main (pty proxy)"
+    },
+    {
+      "label": "main.py stub entry",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1-L6",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "main_main",
+      "community": 1,
+      "norm_label": "main.py stub entry"
+    },
+    {
+      "label": "QMD GUI project README",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_qmd_gui",
+      "community": 1,
+      "norm_label": "qmd gui project readme"
+    },
+    {
+      "label": "QMD upstream project",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L3",
+      "source_url": "https://github.com/tobi/qmd",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_qmd_upstream",
+      "community": 1,
+      "norm_label": "qmd upstream project"
+    },
+    {
+      "label": "Hybrid Search (BM25 + Vector + rerank)",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": "L12",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_hybrid_search",
+      "community": 1,
+      "norm_label": "hybrid search (bm25 + vector + rerank)"
+    },
+    {
+      "label": "Dual Backend architecture (CLI vs MCP HTTP)",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": "L18",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_dual_backend",
+      "community": 1,
+      "norm_label": "dual backend architecture (cli vs mcp http)"
+    },
+    {
+      "label": "PTY-based embedding progress parsing",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": "L16",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_pty_progress_parsing",
+      "community": 1,
+      "norm_label": "pty-based embedding progress parsing"
+    },
+    {
+      "label": "Catppuccin Mocha dark theme",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": "L19",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_catppuccin_theme",
+      "community": 1,
+      "norm_label": "catppuccin mocha dark theme"
+    },
+    {
+      "label": "Future feature: context editor (qmd context add/rm)",
+      "file_type": "rationale",
+      "source_file": "to-do.txt",
+      "source_location": "L1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "todo_context_editor",
+      "community": 1,
+      "norm_label": "future feature: context editor (qmd context add/rm)"
+    },
+    {
+      "label": "Future feature: keyboard shortcuts (Ctrl+F, Ctrl+1/2/3)",
+      "file_type": "rationale",
+      "source_file": "to-do.txt",
+      "source_location": "L3",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "todo_keyboard_shortcuts",
+      "community": 1,
+      "norm_label": "future feature: keyboard shortcuts (ctrl+f, ctrl+1/2/3)"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_searchresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_collectioninfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L281",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_mcpbackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_searchworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L482",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_docworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L499",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_collectionworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L523",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L589",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L631",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_collectionpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L987",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1413",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_asyncworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1437",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_embedworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1508",
+      "weight": 1.0,
+      "source": "qmd_gui_py",
+      "target": "qmd_gui_qmd_gui_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L263",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_parse_results",
+      "target": "qmd_gui_qmd_gui_searchresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L437",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_parse_results",
+      "target": "qmd_gui_qmd_gui_searchresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_get_collections",
+      "target": "qmd_gui_qmd_gui_collectioninfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L378",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_get_collections",
+      "target": "qmd_gui_qmd_gui_collectioninfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_get_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_get_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L189",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_get_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_add_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L204",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_remove_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L215",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_rename_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L226",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_update_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L235",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_embed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L244",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_list_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L252",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend",
+      "target": "qmd_gui_qmd_gui_clibackend_parse_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L396",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_add_collection",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L399",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_remove_collection",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L402",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_rename_collection",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L405",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_update_index",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L408",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_embed",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L411",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_list_files",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1524",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_main",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_104",
+      "target": "qmd_gui_qmd_gui_clibackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_search",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_search",
+      "target": "qmd_gui_qmd_gui_mcpbackend_parse_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_get_document",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_get_collections",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L190",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_get_status",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L199",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_add_collection",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L205",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_remove_collection",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_rename_collection",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_update_index",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L239",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_embed",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L245",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_clibackend_list_files",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L290",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_next_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L316",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_initialize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L333",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L344",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L364",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_get_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L372",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_get_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L386",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_get_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L395",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_add_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L398",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_remove_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L401",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_rename_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L404",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_update_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L407",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_embed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L410",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_list_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L413",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_is_healthy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L420",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend",
+      "target": "qmd_gui_qmd_gui_mcpbackend_parse_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1519",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_main",
+      "target": "qmd_gui_qmd_gui_mcpbackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L282",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_282",
+      "target": "qmd_gui_qmd_gui_mcpbackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L299",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_call",
+      "target": "qmd_gui_qmd_gui_mcpbackend_next_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L317",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_initialize",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L334",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L356",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_search",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L365",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_get_document",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L373",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_get_collections",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L387",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_get_status",
+      "target": "qmd_gui_qmd_gui_mcpbackend_call_tool",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L362",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_mcpbackend_search",
+      "target": "qmd_gui_qmd_gui_mcpbackend_parse_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L470",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_searchworker_run",
+      "target": "qmd_gui_qmd_gui_mcpbackend_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L493",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_docworker_run",
+      "target": "qmd_gui_qmd_gui_mcpbackend_get_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1400",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_show_status",
+      "target": "qmd_gui_qmd_gui_mcpbackend_get_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1520",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_main",
+      "target": "qmd_gui_qmd_gui_mcpbackend_is_healthy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_searchworker",
+      "target": "qthread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L459",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_searchworker",
+      "target": "qmd_gui_qmd_gui_searchworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L468",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_searchworker",
+      "target": "qmd_gui_qmd_gui_searchworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1185",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_do_search",
+      "target": "qmd_gui_qmd_gui_searchworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L482",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_docworker",
+      "target": "qthread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L499",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionworker",
+      "target": "qthread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1413",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_asyncworker",
+      "target": "qthread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1437",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_embedworker",
+      "target": "qthread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L460",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_searchworker_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L486",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_docworker",
+      "target": "qmd_gui_qmd_gui_docworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L491",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_docworker",
+      "target": "qmd_gui_qmd_gui_docworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1251",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_on_result_selected",
+      "target": "qmd_gui_qmd_gui_docworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L487",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_docworker_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L505",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionworker",
+      "target": "qmd_gui_qmd_gui_collectionworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L510",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionworker",
+      "target": "qmd_gui_qmd_gui_collectionworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L780",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_selection_changed",
+      "target": "qmd_gui_qmd_gui_collectionworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L862",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "target": "qmd_gui_qmd_gui_collectionworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L500",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_500",
+      "target": "qmd_gui_qmd_gui_collectionworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L506",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionworker_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L523",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog",
+      "target": "qdialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L526",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L561",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog_browse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L569",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog_validate_and_accept",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L581",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog_get_values",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L868",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_add_collection",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L524",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_524",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L589",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "target": "qdialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L527",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_addcollectiondialog_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L870",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_add_collection",
+      "target": "qmd_gui_qmd_gui_addcollectiondialog_get_values",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L592",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L616",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog_validate_and_accept",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L622",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog_get_new_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L902",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L590",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_590",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L593",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_renamecollectiondialog_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L904",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "target": "qmd_gui_qmd_gui_renamecollectiondialog_get_new_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L631",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qwidget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L636",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L643",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_build_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L761",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_selection_changed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L789",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_files_loaded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L799",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_files_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L803",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L817",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_refresh_done",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L824",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_refresh_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L828",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L834",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L849",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_worker_finished",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L856",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_worker_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L860",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L867",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_add_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L879",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_remove_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L898",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L913",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_update_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L922",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_embed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L945",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_embed_progress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L949",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_embed_log",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L960",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_embed_finished",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L969",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_on_embed_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L975",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel",
+      "target": "qmd_gui_qmd_gui_collectionpanel_hide_progress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1113",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "target": "qmd_gui_qmd_gui_collectionpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L632",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_632",
+      "target": "qmd_gui_qmd_gui_collectionpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L680",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_build_ui",
+      "target": "qwidget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1001",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "target": "qwidget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L637",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L641",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_init",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L796",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_files_loaded",
+      "target": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L812",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "target": "qmd_gui_qmd_gui_asyncworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L851",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_worker_finished",
+      "target": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L964",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_embed_finished",
+      "target": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1142",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_on_tab_changed",
+      "target": "qmd_gui_qmd_gui_collectionpanel_refresh_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L880",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_remove_collection",
+      "target": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L899",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "target": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L914",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_update_index",
+      "target": "qmd_gui_qmd_gui_collectionpanel_get_selected_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L850",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_worker_finished",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L857",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_worker_error",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L861",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L961",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_embed_finished",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L970",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_embed_error",
+      "target": "qmd_gui_qmd_gui_collectionpanel_set_busy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L871",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_add_collection",
+      "target": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L892",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_remove_collection",
+      "target": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L906",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_rename_collection",
+      "target": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L916",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_update_index",
+      "target": "qmd_gui_qmd_gui_collectionpanel_run_worker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L938",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_embed",
+      "target": "qmd_gui_qmd_gui_embedworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L973",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_collectionpanel_on_embed_error",
+      "target": "qmd_gui_qmd_gui_collectionpanel_hide_progress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L987",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmainwindow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L988",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1000",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1140",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_tab_changed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1146",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_refresh_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1157",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_changed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1163",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_get_mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1167",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_do_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1192",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_search_done",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1216",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_search_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1221",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_result_selected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1256",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_doc_loaded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1260",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_render_preview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1378",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_doc_error",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1381",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_load_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1391",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_loaded",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1398",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_show_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1534",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_main",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L989",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L997",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_init",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_build_ui",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L998",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_init",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_load_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1144",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_on_tab_changed",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_refresh_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1148",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_refresh_status",
+      "target": "qmd_gui_qmd_gui_asyncworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1159",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_changed",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_load_collections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1158",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_1158",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_on_collections_changed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1180",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_do_search",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_get_mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1258",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_on_doc_loaded",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_render_preview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1261",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_1261",
+      "target": "qmd_gui_qmd_gui_qmdmainwindow_render_preview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1384",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_qmdmainwindow_load_collections",
+      "target": "qmd_gui_qmd_gui_asyncworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1419",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_asyncworker",
+      "target": "qmd_gui_qmd_gui_asyncworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1424",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_asyncworker",
+      "target": "qmd_gui_qmd_gui_asyncworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1414",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_1414",
+      "target": "qmd_gui_qmd_gui_asyncworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1420",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_asyncworker_init",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1446",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_embedworker",
+      "target": "qmd_gui_qmd_gui_embedworker_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1450",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_embedworker",
+      "target": "qmd_gui_qmd_gui_embedworker_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "qmd_gui.py",
+      "source_location": "L1438",
+      "weight": 1.0,
+      "source": "qmd_gui_qmd_gui_rationale_1438",
+      "target": "qmd_gui_qmd_gui_embedworker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "main_py",
+      "target": "qmd_gui_main_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "embed_runner.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "embed_runner_py",
+      "target": "qmd_gui_embed_runner_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L113,L252-L273",
+      "weight": 1.0,
+      "source": "qmd_gui_clibackend",
+      "target": "qmd_gui_searchresult"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L351,L420-L447",
+      "weight": 1.0,
+      "source": "qmd_gui_mcpbackend",
+      "target": "qmd_gui_searchresult"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L991,L1192",
+      "weight": 1.0,
+      "source": "qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_searchresult"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L137,L170",
+      "weight": 1.0,
+      "source": "qmd_gui_clibackend",
+      "target": "qmd_gui_collectioninfo"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L372-L384",
+      "weight": 1.0,
+      "source": "qmd_gui_mcpbackend",
+      "target": "qmd_gui_collectioninfo"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L639,L767",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_collectioninfo"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "qmd_gui.py",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "qmd_gui_mcpbackend",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "qmd_gui.py",
+      "source_location": "L468-L477",
+      "weight": 1.0,
+      "source": "qmd_gui_searchworker",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "qmd_gui.py",
+      "source_location": "L491-L495",
+      "weight": 1.0,
+      "source": "qmd_gui_docworker",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "qmd_gui.py",
+      "source_location": "L510-L515",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionworker",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1524,L1526",
+      "weight": 1.0,
+      "source": "qmd_gui_main",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "README.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "readme_dual_backend",
+      "target": "qmd_gui_clibackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "qmd_gui.py",
+      "source_location": "L468-L477",
+      "weight": 1.0,
+      "source": "qmd_gui_searchworker",
+      "target": "qmd_gui_mcpbackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "qmd_gui.py",
+      "source_location": "L491-L495",
+      "weight": 1.0,
+      "source": "qmd_gui_docworker",
+      "target": "qmd_gui_mcpbackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1519",
+      "weight": 1.0,
+      "source": "qmd_gui_main",
+      "target": "qmd_gui_mcpbackend"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "README.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "readme_dual_backend",
+      "target": "qmd_gui_mcpbackend"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1185-L1190",
+      "weight": 1.0,
+      "source": "qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_searchworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1251-L1254",
+      "weight": 1.0,
+      "source": "qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_docworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L780,L862",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_collectionworker"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "qmd_gui.py",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "qmd_gui_asyncworker",
+      "target": "qmd_gui_collectionworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1148,L1384",
+      "weight": 1.0,
+      "source": "qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_asyncworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L812",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_asyncworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L938-L943",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_embedworker"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1472-L1497",
+      "weight": 1.0,
+      "source": "qmd_gui_embedworker",
+      "target": "embed_runner_main"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "README.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "readme_pty_progress_parsing",
+      "target": "qmd_gui_embedworker"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L868-L877",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_addcollectiondialog"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "qmd_gui.py",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "qmd_gui_addcollectiondialog",
+      "target": "qmd_gui_renamecollectiondialog"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L902-L911",
+      "weight": 1.0,
+      "source": "qmd_gui_collectionpanel",
+      "target": "qmd_gui_renamecollectiondialog"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1113-L1115",
+      "weight": 1.0,
+      "source": "qmd_gui_qmdmainwindow",
+      "target": "qmd_gui_collectionpanel"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "to-do.txt",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "todo_context_editor",
+      "target": "qmd_gui_collectionpanel"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "qmd_gui.py",
+      "source_location": "L1534-L1535",
+      "weight": 1.0,
+      "source": "qmd_gui_main",
+      "target": "qmd_gui_qmdmainwindow"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "readme_hybrid_search",
+      "target": "qmd_gui_qmdmainwindow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "to-do.txt",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "todo_keyboard_shortcuts",
+      "target": "qmd_gui_qmdmainwindow"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.55,
+      "source_file": "main.py",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "main_main",
+      "target": "qmd_gui_main"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "README.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "readme_pty_progress_parsing",
+      "target": "embed_runner_main"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "readme_qmd_gui",
+      "target": "readme_qmd_upstream"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "readme_qmd_gui",
+      "target": "readme_hybrid_search"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "readme_qmd_gui",
+      "target": "readme_dual_backend"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "readme_qmd_gui",
+      "target": "readme_pty_progress_parsing"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "readme_qmd_gui",
+      "target": "readme_catppuccin_theme"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "qthread_worker_family",
+      "label": "Qt worker thread family for async backend ops",
+      "nodes": [
+        "qmd_gui_searchworker",
+        "qmd_gui_docworker",
+        "qmd_gui_collectionworker",
+        "qmd_gui_asyncworker",
+        "qmd_gui_embedworker"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "qmd_gui.py"
+    },
+    {
+      "id": "embed_progress_pipeline",
+      "label": "Embedding progress pipeline (UI panel -> EmbedWorker -> PTY runner -> qmd embed)",
+      "nodes": [
+        "qmd_gui_collectionpanel",
+        "qmd_gui_embedworker",
+        "embed_runner_main",
+        "readme_pty_progress_parsing"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "qmd_gui.py"
+    },
+    {
+      "id": "dual_backend_strategy",
+      "label": "Dual-backend interchangeable interface used by workers and main window",
+      "nodes": [
+        "qmd_gui_clibackend",
+        "qmd_gui_mcpbackend",
+        "qmd_gui_qmdmainwindow",
+        "readme_dual_backend"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "qmd_gui.py"
+    }
+  ],
+  "built_at_commit": "306a9edeb8d3c958743a6cba0efe5ee463780d4a"
+}
