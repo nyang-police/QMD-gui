@@ -95,6 +95,151 @@ class CollectionInfo:
     glob_pattern: str = ""
 
 
+def _parse_context_list(output: str, known_collections: set[str]) -> list["ContextEntry"]:
+    """Parse `qmd context list` text output into ContextEntry list.
+
+    Format observed:
+        Configured Contexts
+
+        *                            <-- global marker (indent 0)
+          /                          <-- sub_path under global (indent 2)
+            Text line 1              <-- text body (indent 4)
+        Text line 2                  <-- multiline continuation (flush left!)
+        <collection_name>            <-- indent 0
+          <sub_path possibly nested> <-- indent 2
+            <text>
+
+    Multiline text continuations appear at indent 0, so we use the known
+    collection name set (+ "*") to distinguish them from a new section.
+    """
+    if "No contexts configured" in output:
+        return []
+
+    entries: list[ContextEntry] = []
+    current_collection: Optional[str] = None  # "" means global section
+    current_sub: Optional[str] = None
+    current_text: list[str] = []
+    is_global = False
+
+    def flush() -> None:
+        if current_sub is None:
+            return
+        entries.append(
+            ContextEntry(
+                collection="" if is_global else (current_collection or ""),
+                sub_path=current_sub,
+                text="\n".join(current_text).rstrip(),
+            )
+        )
+
+    section_markers = known_collections | {"*"}
+
+    for raw in output.splitlines():
+        line = raw.rstrip()
+        if not line:
+            continue
+        if line.strip() == "Configured Contexts":
+            continue
+        indent = len(line) - len(line.lstrip(" "))
+        stripped = line.strip()
+
+        if indent == 0 and stripped in section_markers:
+            flush()
+            current_text = []
+            if stripped == "*":
+                is_global = True
+                current_collection = ""
+            else:
+                is_global = False
+                current_collection = stripped
+            current_sub = None
+            continue
+
+        if indent == 2 and current_collection is not None or (indent == 2 and is_global):
+            flush()
+            current_text = []
+            # `qmd context list` renders a collection-root context as the literal
+            # "/ (root)" — normalize to empty sub_path so rebuilding the qmd_path
+            # yields `qmd://<col>/` (which is what `qmd context rm` expects).
+            if not is_global and (stripped == "/ (root)" or stripped.startswith("/ ")):
+                current_sub = ""
+            else:
+                current_sub = stripped
+            continue
+
+        if indent >= 4 or current_sub is not None:
+            current_text.append(stripped)
+
+    flush()
+    return entries
+
+
+@dataclass
+class ContextEntry:
+    """A human-written context attached to a qmd path.
+
+    `collection` is "" and `sub_path` is "/" for the global context.
+    For collection-scoped entries `sub_path` is the path under the
+    collection (e.g. "" for the collection root, or "qmd-gui/src").
+    """
+    collection: str = ""
+    sub_path: str = ""
+    text: str = ""
+
+    @property
+    def qmd_path(self) -> str:
+        if self.sub_path == "/" and not self.collection:
+            return "/"
+        base = f"qmd://{self.collection}/"
+        if self.sub_path:
+            return base + self.sub_path.lstrip("/")
+        return base
+
+
+QMD_INDEX_YML = os.path.expanduser("~/.config/qmd/index.yml")
+
+
+def load_collection_abs_paths(index_path: str = QMD_INDEX_YML) -> dict[str, str]:
+    """Read ~/.config/qmd/index.yml and return {collection_name: absolute_path}.
+
+    Hand-parsed to avoid a PyYAML dependency. The file's structure is shallow:
+        collections:
+          <name>:
+            path: <absolute path>
+            pattern: "..."
+    """
+    result: dict[str, str] = {}
+    if not os.path.isfile(index_path):
+        return result
+    try:
+        with open(index_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except OSError:
+        return result
+
+    in_collections = False
+    current_name: Optional[str] = None
+    for raw in lines:
+        line = raw.rstrip("\n")
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        indent = len(line) - len(line.lstrip(" "))
+        if indent == 0:
+            in_collections = stripped.rstrip(":") == "collections"
+            current_name = None
+            continue
+        if not in_collections:
+            continue
+        if indent == 2 and stripped.endswith(":"):
+            current_name = stripped[:-1].strip()
+        elif indent >= 4 and current_name and stripped.startswith("path:"):
+            value = stripped[len("path:"):].strip().strip('"').strip("'")
+            if value:
+                result[current_name] = os.path.expanduser(value)
+    return result
+
+
 # ──────────────────────────────────────────────
 #  Backend: CLI (subprocess)
 # ──────────────────────────────────────────────
@@ -247,6 +392,36 @@ class CLIBackend:
         )
         if result.returncode != 0:
             raise RuntimeError(result.stderr.strip())
+        return result.stdout.strip()
+
+    def list_contexts(self) -> list[ContextEntry]:
+        result = subprocess.run(
+            ["qmd", "context", "list"], capture_output=True, text=True, timeout=10
+        )
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.strip())
+        return _parse_context_list(result.stdout, set(load_collection_abs_paths().keys()))
+
+    def add_context(self, qmd_path: str, text: str) -> str:
+        result = subprocess.run(
+            ["qmd", "context", "add", qmd_path, text],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.strip() or result.stdout.strip())
+        return result.stdout.strip()
+
+    def remove_context(self, qmd_path: str) -> str:
+        result = subprocess.run(
+            ["qmd", "context", "rm", qmd_path],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.strip() or result.stdout.strip())
         return result.stdout.strip()
 
     def _parse_results(self, data) -> list[SearchResult]:
@@ -409,6 +584,15 @@ class MCPBackend:
 
     def list_files(self, collection: str) -> str:
         return CLIBackend().list_files(collection)
+
+    def list_contexts(self) -> list[ContextEntry]:
+        return CLIBackend().list_contexts()
+
+    def add_context(self, qmd_path: str, text: str) -> str:
+        return CLIBackend().add_context(qmd_path, text)
+
+    def remove_context(self, qmd_path: str) -> str:
+        return CLIBackend().remove_context(qmd_path)
 
     def is_healthy(self) -> bool:
         try:
@@ -623,6 +807,83 @@ class RenameCollectionDialog(QDialog):
         return self.new_name_input.text().strip()
 
 
+class AddContextDialog(QDialog):
+    """Dialog to add a context attached to a qmd path."""
+
+    SCOPE_COLLECTION = "Collection root"
+    SCOPE_SUBPATH = "Sub-path"
+    SCOPE_GLOBAL = "Global (all collections)"
+
+    def __init__(self, collection_name: str, subpaths: Optional[list[str]] = None, parent=None):
+        super().__init__(parent)
+        self.collection_name = collection_name
+        self.setWindowTitle(f"Add Context — {collection_name or 'global'}")
+        self.setMinimumWidth(520)
+
+        layout = QFormLayout(self)
+
+        self.scope_combo = QComboBox()
+        self.scope_combo.addItems(
+            [self.SCOPE_COLLECTION, self.SCOPE_SUBPATH, self.SCOPE_GLOBAL]
+        )
+        self.scope_combo.currentTextChanged.connect(self._on_scope_changed)
+        layout.addRow("Scope:", self.scope_combo)
+
+        self.sub_path_combo = QComboBox()
+        self.sub_path_combo.setEditable(True)
+        self.sub_path_combo.lineEdit().setPlaceholderText(
+            "Pick or type a sub-path (e.g. subfolder, subfolder/file.md)"
+        )
+        if subpaths:
+            self.sub_path_combo.addItem("")  # empty default so nothing is pre-selected
+            self.sub_path_combo.addItems(subpaths)
+            self.sub_path_combo.setCurrentIndex(0)
+        self.sub_path_combo.setEnabled(False)
+        layout.addRow("Sub-path:", self.sub_path_combo)
+
+        self.text_input = QTextEdit()
+        self.text_input.setPlaceholderText("Context text (human-written summary)...")
+        self.text_input.setMinimumHeight(120)
+        layout.addRow("Context:", self.text_input)
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(self._validate_and_accept)
+        buttons.rejected.connect(self.reject)
+        layout.addRow(buttons)
+
+    def _on_scope_changed(self, scope: str):
+        self.sub_path_combo.setEnabled(scope == self.SCOPE_SUBPATH)
+        if scope != self.SCOPE_SUBPATH:
+            self.sub_path_combo.setCurrentIndex(0) if self.sub_path_combo.count() else None
+            self.sub_path_combo.setEditText("")
+
+    def _validate_and_accept(self):
+        text = self.text_input.toPlainText().strip()
+        if not text:
+            QMessageBox.warning(self, "Validation", "Context text is required.")
+            return
+        if self.scope_combo.currentText() == self.SCOPE_SUBPATH:
+            if not self.sub_path_combo.currentText().strip():
+                QMessageBox.warning(
+                    self, "Validation", "Sub-path is required for this scope."
+                )
+                return
+        self.accept()
+
+    def get_values(self) -> tuple[str, str]:
+        """Return (qmd_path, text) ready for `qmd context add`."""
+        scope = self.scope_combo.currentText()
+        text = self.text_input.toPlainText().strip()
+        if scope == self.SCOPE_GLOBAL:
+            return "/", text
+        if scope == self.SCOPE_SUBPATH:
+            sub = self.sub_path_combo.currentText().strip().lstrip("/")
+            return f"qmd://{self.collection_name}/{sub}", text
+        return f"qmd://{self.collection_name}/", text
+
+
 # ──────────────────────────────────────────────
 #  Collection Management Panel
 # ──────────────────────────────────────────────
@@ -637,6 +898,9 @@ class CollectionPanel(QWidget):
         super().__init__(parent)
         self.backend = backend
         self.collections: list[CollectionInfo] = []
+        self.abs_paths: dict[str, str] = {}
+        self.contexts: list[ContextEntry] = []
+        self.collection_subpaths: list[str] = []
         self.worker: Optional[CollectionWorker] = None
         self._build_ui()
 
@@ -700,12 +964,56 @@ class CollectionPanel(QWidget):
         files_layout.setContentsMargins(0, 0, 0, 0)
         files_layout.setSpacing(0)
 
+        self.file_path_label = QLabel("")
+        self.file_path_label.setObjectName("filePathLabel")
+        self.file_path_label.setFont(QFont(MONO_FONT, 10))
+        self.file_path_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.file_path_label.setContentsMargins(8, 6, 8, 6)
+        self.file_path_label.setVisible(False)
+        files_layout.addWidget(self.file_path_label)
+
         self.file_list = QListWidget()
         self.file_list.setFont(QFont(MONO_FONT, 10))
         self.file_list.setObjectName("fileList")
         files_layout.addWidget(self.file_list)
 
         self.files_tabs.addTab(files_widget, "Files")
+
+        # ── Contexts tab ──
+        contexts_widget = QWidget()
+        contexts_layout = QVBoxLayout(contexts_widget)
+        contexts_layout.setContentsMargins(0, 0, 0, 0)
+        contexts_layout.setSpacing(0)
+
+        self.context_list = QListWidget()
+        self.context_list.setFont(QFont(MONO_FONT, 10))
+        self.context_list.setObjectName("contextList")
+        self.context_list.setWordWrap(True)
+        contexts_layout.addWidget(self.context_list)
+
+        ctx_btn_row = QHBoxLayout()
+        ctx_btn_row.setContentsMargins(6, 4, 6, 4)
+        self.add_context_btn = QPushButton("+ Add Context")
+        self.add_context_btn.clicked.connect(self._add_context)
+        self.add_context_btn.setEnabled(False)
+        ctx_btn_row.addWidget(self.add_context_btn)
+
+        self.remove_context_btn = QPushButton("- Remove Context")
+        self.remove_context_btn.clicked.connect(self._remove_context)
+        self.remove_context_btn.setEnabled(False)
+        ctx_btn_row.addWidget(self.remove_context_btn)
+
+        ctx_btn_row.addStretch()
+
+        self.refresh_contexts_btn = QPushButton("Refresh")
+        self.refresh_contexts_btn.clicked.connect(self._refresh_contexts)
+        ctx_btn_row.addWidget(self.refresh_contexts_btn)
+
+        contexts_layout.addLayout(ctx_btn_row)
+
+        self.context_list.currentRowChanged.connect(self._on_context_selection_changed)
+
+        self.files_tabs.addTab(contexts_widget, "Contexts")
         upper_splitter.addWidget(self.files_tabs)
 
         upper_splitter.setSizes([300, 500])
@@ -765,14 +1073,20 @@ class CollectionPanel(QWidget):
 
         if has_selection and row < len(self.collections):
             col = self.collections[row]
+            abs_path = self.abs_paths.get(col.name, "")
 
             details = [
                 f"Name:       {col.name}",
-                f"Path:       {col.path}",
+                f"Path:       {abs_path or col.path}",
                 f"Documents:  {col.doc_count}",
                 f"Pattern:    {col.glob_pattern or '**/*.md'}",
             ]
             self.detail_view.setPlainText("\n".join(details))
+
+            display_path = abs_path or col.path
+            self.file_path_label.setText(display_path)
+            self.file_path_label.setToolTip(display_path)
+            self.file_path_label.setVisible(bool(display_path))
 
             self.files_tabs.setTabText(0, f"Files — {col.name}")
             self.file_list.clear()
@@ -781,19 +1095,38 @@ class CollectionPanel(QWidget):
             self._file_worker.finished.connect(self._on_files_loaded)
             self._file_worker.error.connect(self._on_files_error)
             self._file_worker.start()
+
+            self._render_contexts()
         else:
             self.detail_view.clear()
             self.file_list.clear()
+            self.file_path_label.clear()
+            self.file_path_label.setVisible(False)
             self.files_tabs.setTabText(0, "Files")
+            self._render_contexts()
 
     def _on_files_loaded(self, output: str):
         self.file_list.clear()
+        name = self._get_selected_name() or ""
+        prefix = f"qmd://{name}/"
+        subpaths: set[str] = set()
         for line in output.strip().split("\n"):
             line = line.strip()
-            if line:
-                self.file_list.addItem(line)
+            if not line:
+                continue
+            self.file_list.addItem(line)
+            # Extract everything after `qmd://<collection>/` if present
+            idx = line.find(prefix)
+            if name and idx != -1:
+                sub = line[idx + len(prefix):].strip()
+                if sub:
+                    subpaths.add(sub)
+                    parent = "/".join(sub.split("/")[:-1])
+                    while parent:
+                        subpaths.add(parent)
+                        parent = "/".join(parent.split("/")[:-1])
+        self.collection_subpaths = sorted(subpaths)
         count = self.file_list.count()
-        name = self._get_selected_name() or ""
         self.files_tabs.setTabText(0, f"Files — {name} ({count})")
 
     def _on_files_error(self, msg: str):
@@ -805,6 +1138,8 @@ class CollectionPanel(QWidget):
         self.collection_list.addItem("Loading...")
         self.detail_view.clear()
         self.file_list.clear()
+        self.file_path_label.clear()
+        self.file_path_label.setVisible(False)
         self.files_tabs.setTabText(0, "Files")
         self.remove_btn.setEnabled(False)
         self.rename_btn.setEnabled(False)
@@ -814,12 +1149,121 @@ class CollectionPanel(QWidget):
         self._refresh_worker.error.connect(self._on_refresh_error)
         self._refresh_worker.start()
 
+        self._refresh_contexts()
+
     def _on_refresh_done(self, collections):
         self.collections = collections
+        self.abs_paths = load_collection_abs_paths()
         self.collection_list.clear()
         for col in self.collections:
             doc_info = f" ({col.doc_count} docs)" if col.doc_count else ""
             self.collection_list.addItem(f"{col.name}{doc_info}")
+
+    # ── Contexts ───────────────────────────────────────────────
+
+    def _refresh_contexts(self):
+        self.context_list.clear()
+        self.context_list.addItem("Loading...")
+        self.add_context_btn.setEnabled(False)
+        self.remove_context_btn.setEnabled(False)
+        self._ctx_worker = AsyncWorker(self.backend.list_contexts)
+        self._ctx_worker.finished.connect(self._on_contexts_loaded)
+        self._ctx_worker.error.connect(self._on_contexts_error)
+        self._ctx_worker.start()
+
+    def _on_contexts_loaded(self, entries):
+        self.contexts = entries or []
+        self._render_contexts()
+
+    def _on_contexts_error(self, msg: str):
+        self.contexts = []
+        self.context_list.clear()
+        self.context_list.addItem(f"(Error: {msg})")
+        self.add_context_btn.setEnabled(True)
+
+    def _render_contexts(self):
+        self.context_list.clear()
+        selected = self._get_selected_name()
+        self.add_context_btn.setEnabled(True)
+        self.remove_context_btn.setEnabled(False)
+
+        visible: list[ContextEntry] = []
+        for e in self.contexts:
+            if not e.collection:  # global
+                visible.append(e)
+            elif selected and e.collection == selected:
+                visible.append(e)
+
+        if not visible:
+            placeholder = (
+                "(No contexts for this collection)"
+                if selected
+                else "(Select a collection to see its contexts; global contexts also appear here)"
+            )
+            self.context_list.addItem(placeholder)
+            item = self.context_list.item(0)
+            if item:
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsSelectable)
+        else:
+            for e in visible:
+                scope_tag = "[global]" if not e.collection else (e.sub_path or "/")
+                first_line = e.text.splitlines()[0] if e.text else ""
+                label = f"{scope_tag:30s}  {first_line}"
+                item = QListWidgetItem(label)
+                item.setToolTip(e.text or "")
+                item.setData(Qt.ItemDataRole.UserRole, e)
+                self.context_list.addItem(item)
+
+        self.files_tabs.setTabText(1, f"Contexts ({len(visible)})")
+
+    def _on_context_selection_changed(self, row: int):
+        item = self.context_list.item(row) if row >= 0 else None
+        has_entry = bool(item and item.data(Qt.ItemDataRole.UserRole))
+        self.remove_context_btn.setEnabled(has_entry)
+
+    def _add_context(self):
+        selected = self._get_selected_name() or ""
+        dialog = AddContextDialog(selected, self.collection_subpaths, self)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+        qmd_path, text = dialog.get_values()
+        self._set_busy(True, f"Adding context for '{qmd_path}'...")
+        self._ctx_op = CollectionWorker(self.backend.add_context, qmd_path, text)
+        self._ctx_op.finished.connect(self._on_context_op_done)
+        self._ctx_op.error.connect(self._on_context_op_error)
+        self._ctx_op.start()
+
+    def _remove_context(self):
+        row = self.context_list.currentRow()
+        item = self.context_list.item(row) if row >= 0 else None
+        entry = item.data(Qt.ItemDataRole.UserRole) if item else None
+        if not isinstance(entry, ContextEntry):
+            return
+        reply = QMessageBox.question(
+            self,
+            "Remove Context",
+            f"Remove context for:\n  {entry.qmd_path}\n\n"
+            "The context text will be deleted (your files are not affected).",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+        self._set_busy(True, f"Removing context '{entry.qmd_path}'...")
+        self._ctx_op = CollectionWorker(self.backend.remove_context, entry.qmd_path)
+        self._ctx_op.finished.connect(self._on_context_op_done)
+        self._ctx_op.error.connect(self._on_context_op_error)
+        self._ctx_op.start()
+
+    def _on_context_op_done(self, message: str):
+        self._set_busy(False)
+        self._refresh_contexts()
+        if message:
+            self.detail_view.setPlainText(message)
+
+    def _on_context_op_error(self, message: str):
+        self._set_busy(False)
+        QMessageBox.warning(self, "Error", message)
 
     def _on_refresh_error(self, msg: str):
         self.collection_list.clear()

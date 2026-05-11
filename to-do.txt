@@ -1,3 +1,1 @@
-컨텍스트 편집기 — qmd context add/rm 기능을 GUI에서 관리
-
 키보드 단축키 — Ctrl+F로 검색 포커스, Ctrl+1/2/3으로 검색 모드 전환 등
